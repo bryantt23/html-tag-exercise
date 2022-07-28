@@ -35,10 +35,14 @@ console.log(tag.print()); //<html class="blue-theme main-content"></html>
 
 const bodyTag = new Tag('body');
 const divTag = new Tag('div');
+const imgTag = new Tag('img');
 const pTag = new Tag('p');
+const pTag2 = new Tag('p');
+divTag.appendChild(pTag2);
 tag.appendChild(bodyTag);
 tag.appendChild(pTag);
 bodyTag.appendChild(divTag);
+bodyTag.appendChild(imgTag);
 tag.addClass('third-class');
 bodyTag.addClass('body-class');
 console.log(tag.print()); //<html class="blue-theme"><body></body></html>'
