@@ -4,25 +4,33 @@ class Tag {
     this.classNames = [];
     this.children = [];
   }
-  print = () => {
+  print = (cur = this) => {
     let childrenPrinted = '';
-    for (const child of this.children) {
-      childrenPrinted += this.printHelper(child);
+    // console.log(this);
+
+    for (const child of cur.children) {
+      childrenPrinted += this.print(child);
     }
 
     const classTemp =
-      this.classNames.length === 0
-        ? ''
-        : ` class="${this.classNames.join(' ')}"`;
-    return `<${this.name}${classTemp}>${childrenPrinted}</${this.name}>`;
+      cur.classNames.length === 0 ? '' : ` class="${cur.classNames.join(' ')}"`;
+    return `<${cur.name}${classTemp}>${childrenPrinted}</${cur.name}>`;
   };
-  printHelper = child => {
-    const classTemp =
-      child.classNames.length === 0
-        ? ''
-        : ` class="${child.classNames.join(' ')}"`;
-    return `<${child.name}${classTemp}></${child.name}>`;
-  };
+  //   printHelper = child => {
+  //     if (child === null) {
+  //       return;
+  //     }
+  //     let childrenPrinted = '';
+  //     for (const child of this.children) {
+  //       childrenPrinted += this.printHelper(child);
+  //     }
+
+  //     const classTemp =
+  //       child.classNames.length === 0
+  //         ? ''
+  //         : ` class="${child.classNames.join(' ')}"`;
+  //     return `<${child.name}${classTemp}></${child.name}>`;
+  //   };
 
   addClass = className => {
     this.classNames.push(className);
@@ -43,8 +51,11 @@ console.log(tag.print()); //<html class="blue-theme main-content"></html>
 
 const bodyTag = new Tag('body');
 const divTag = new Tag('div');
+const pTag = new Tag('p');
 tag.appendChild(bodyTag);
-// bodyTag.append_child(divTag);
+tag.appendChild(pTag);
+bodyTag.appendChild(divTag);
+tag.addClass('third-class');
+bodyTag.addClass('body-class');
 console.log('nested?  ', tag.print()); //<html class="blue-theme"><body></body></html>'
-
 //'<html class="blue-theme"><body><div></div></body></html>';
