@@ -19,4 +19,7 @@ const tag = new Tag('html');
 console.log(tag.print()); //<html></html>
 
 tag.addClass('blue-theme');
+console.log(tag.print()); //<html class="blue-theme"></html>
+
+tag.addClass('main-content');
 console.log(tag.print()); //<html class="blue-theme main-content"></html>
