@@ -4,6 +4,21 @@ class Tag {
     this.classNames = [];
     this.children = [];
   }
+  querySelector = (targetClassName, cur = this) => {
+    for (const child of cur.children) {
+      const childTemp = this.querySelector(targetClassName, child);
+      if (childTemp !== null) {
+        return childTemp;
+      }
+    }
+
+    const hasTarget = cur.classNames.includes(targetClassName);
+    if (hasTarget) {
+      return cur;
+    }
+    return null;
+  };
+
   print = (cur = this, prefix = '') => {
     let childrenPrinted = '';
     for (const child of cur.children) {
@@ -36,6 +51,7 @@ console.log(tag.print()); //<html class="blue-theme main-content"></html>
 const bodyTag = new Tag('body');
 const divTag = new Tag('div');
 const imgTag = new Tag('img');
+imgTag.addClass('image-here');
 const pTag = new Tag('p');
 const pTag2 = new Tag('p');
 divTag.appendChild(pTag2);
@@ -47,3 +63,15 @@ tag.addClass('third-class');
 bodyTag.addClass('body-class');
 console.log(tag.print()); //<html class="blue-theme"><body></body></html>'
 //'<html class="blue-theme"><body><div></div></body></html>';
+
+console.log('querySelector ');
+const targetNode = tag.querySelector('main-content');
+console.log(targetNode.print());
+
+console.log('querySelector 2');
+const targetNode2 = tag.querySelector('image-here');
+console.log(targetNode2.print());
+//  <div class="main-content">
+// #        <span class="some-other-content"></span>
+// #        <p class="some-other-content">
+// #      </div>
