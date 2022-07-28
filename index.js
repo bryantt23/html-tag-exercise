@@ -4,34 +4,18 @@ class Tag {
     this.classNames = [];
     this.children = [];
   }
-  print = (cur = this) => {
+  print = (cur = this, prefix = '') => {
     let childrenPrinted = '';
-    // console.log(this);
-
     for (const child of cur.children) {
-      childrenPrinted += this.print(child);
+      childrenPrinted += this.print(child, '   ' + prefix);
     }
 
     const classTemp =
       cur.classNames.length === 0 ? '' : ` class="${cur.classNames.join(' ')}"`;
-    return `<${cur.name}${classTemp}>${childrenPrinted}</${cur.name}>`;
+    return `
+    ${prefix}<${cur.name}${classTemp}>${childrenPrinted}
+    ${prefix}</${cur.name}>`;
   };
-  //   printHelper = child => {
-  //     if (child === null) {
-  //       return;
-  //     }
-  //     let childrenPrinted = '';
-  //     for (const child of this.children) {
-  //       childrenPrinted += this.printHelper(child);
-  //     }
-
-  //     const classTemp =
-  //       child.classNames.length === 0
-  //         ? ''
-  //         : ` class="${child.classNames.join(' ')}"`;
-  //     return `<${child.name}${classTemp}></${child.name}>`;
-  //   };
-
   addClass = className => {
     this.classNames.push(className);
   };
@@ -57,5 +41,5 @@ tag.appendChild(pTag);
 bodyTag.appendChild(divTag);
 tag.addClass('third-class');
 bodyTag.addClass('body-class');
-console.log('nested?  ', tag.print()); //<html class="blue-theme"><body></body></html>'
+console.log(tag.print()); //<html class="blue-theme"><body></body></html>'
 //'<html class="blue-theme"><body><div></div></body></html>';
